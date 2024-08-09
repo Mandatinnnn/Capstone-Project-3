@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Home</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>WebBlogs</h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/create">Create New Post</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <% if (posts.length > 0) { %>
+                <div class="posts">
+                    <% posts.forEach((post, index) => { %>
+                        <div class="post-card">
+                            <h2><%= post.title %></h2>
+                            <p id="hid-par">
+                                <% let truncatedContent = ''; %>
+                                <% for (let i = 0; i <= 75; i++) { %>
+                                    <% truncatedContent += post.content[i] || ''; %>
+                                <% } %>
+                                <%= truncatedContent.trim() %>...
+                            </p>
+                            <p id="vis-par" style="display: none;">
+                                <%= post.content %>
+                            </p>
+                            <div class="buttons">
+                                <a href="/edit/<%= index %>" class="button edit-btn">Edit</a>
+                                <form action="/delete/<%= index %>" method="post" class="delete-form">
+                                    <button type="submit" class="button delete-btn">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <p>No posts available.</p>
+            <% } %>
+        </div>
+    </main>
+    <script src="/scripts.js"></script>
+</body>
+</html>
